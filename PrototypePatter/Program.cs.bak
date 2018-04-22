@@ -1,0 +1,78 @@
+﻿using System;
+
+namespace PrototypePattern
+{
+    public enum PartOriginCountry
+    {
+        Poland,
+        China,
+        Germany,
+        Italy,
+        Norwey
+    }
+
+    public interface ICloneable
+    {
+        object Clone();
+    }
+
+    public class CustomBike : ICloneable
+    {
+        private PartOriginCountry _handlebar;
+        private PartOriginCountry _frame;
+        private PartOriginCountry _brakes;
+        private PartOriginCountry _wheels;
+
+        public CustomBike(PartOriginCountry handlebar, PartOriginCountry frame, PartOriginCountry brakes, PartOriginCountry wheels)
+        {
+            _handlebar = handlebar;
+            _frame = frame;
+            _brakes = brakes;
+            _wheels = wheels;
+        }
+        public CustomBike(PartOriginCountry handlebar, PartOriginCountry frame,
+            PartOriginCountry brakes, PartOriginCountry wheels)
+        {
+            _handlebar = handlebar;
+            _frame = frame;
+            _brakes = brakes;
+            _wheels = wheels;
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Handlebar: {0} \nFrame: {1} \nBrakes: {2}" +
+                                 " \nWheels: {3}", _handlebar, _frame, _brakes, _wheels);
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            PartOriginCountry handlebar = PartOriginCountry.Norwey;
+            PartOriginCountry frame = PartOriginCountry.China;
+            PartOriginCountry brakes = PartOriginCountry.Germany;
+            PartOriginCountry wheels = PartOriginCountry.Poland;
+
+            var bike = new CustomBike(handlebar, frame, brakes, wheels);
+            Console.WriteLine($"Custom bike: \n{bike} \n");
+
+            var customBike1 = bike.Clone();
+            Console.WriteLine($"Cloned bike 1: \n{customBike1} \n");
+
+            var customBike2 = bike.Clone();
+            Console.WriteLine($"Cloned bike 2: \n{customBike2} \n");
+
+            var customBike3 = bike.Clone();
+            Console.WriteLine($"Cloned bike 3: \n{customBike3} \n");
+
+            Console.ReadKey();
+        }
+    }
+}
